@@ -1,33 +1,20 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.player;
 
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.EntityAttributes;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.EntityDescriptor;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.HumanEntity;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.Position;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.assets.AssetKey;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.EntityType;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.LivingEntity;
 
-public class Player extends LivingEntity {
+public class Player extends HumanEntity {
+    public static final EntityAttributes PLAYER_ATTRIBUTES = new EntityAttributes(100, 5, 3);
+    public static final EntityDescriptor PLAYER_DESCRIPTOR = new EntityDescriptor("Giocatore", PLAYER_ATTRIBUTES);
 
-    public Player(int maxHealth, Position position) {
-        super(maxHealth, position);
+    public Player() {
+        super(PLAYER_DESCRIPTOR, Position.CENTER);
     }
 
     @Override
-    public EntityType getType() {
-        return EntityType.PLAYER;
-    }
-
-    @Override
-    public int getStrength() {
-        return 2;
-    }
-
-    @Override
-    public String getName() {
-        return "Giocatore";
-    }
-
-    @Override
-    public AssetKey getKey() {
-        return AssetKey.ZOMBIE;
+    protected double calculateDamage(double originalDamage) {
+        return 0;
     }
 }

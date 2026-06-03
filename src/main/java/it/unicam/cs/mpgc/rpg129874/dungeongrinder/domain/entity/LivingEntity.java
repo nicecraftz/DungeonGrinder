@@ -4,52 +4,47 @@ import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.Position;
 
 import java.util.UUID;
 
-public abstract class LivingEntity implements Entity, RenderEntity {
+public abstract class LivingEntity implements Entity, Positionable {
     private final UUID uuid;
-    private int health;
-    private final int maxHealth;
-    private boolean dead = false;
+    private final EntityDescriptor descriptor;
     private final Position position;
+    private double health;
 
-    public LivingEntity(int maxHealth, Position position) {
-        this.position = position;
+
+    protected LivingEntity(EntityDescriptor descriptor, Position position) {
         this.uuid = UUID.randomUUID();
-        this.health = maxHealth;
-        this.maxHealth = maxHealth;
+        this.descriptor = descriptor;
+        this.health = descriptor.attributes().maxHealth();
+        this.position = position;
     }
 
-    @Override
-    public int getHealth() {
+    public double getHealth() {
         return health;
     }
 
-    @Override
-    public int getMaxHealth() {
-        return maxHealth;
+    protected abstract double calculateDamage(double originalDamage);
+
+    public void damage(double originalDamage) {
+        double calculated = calculateDamage(originalDamage);
+        health = Math.max(0, health - calculated);
     }
 
-    @Override
-    public void setHealth(int newHealth) {
-        health = Math.max(0, Math.min(maxHealth, newHealth));
-        if (health == 0) dead = true;
-    }
-
-    @Override
     public boolean isDead() {
-        return dead;
+        return health <= 0;
+    }
+
+    @Override
+    public EntityDescriptor getDescriptor() {
+        return descriptor;
+    }
+
+    @Override
+    public Position getPosition() {
+        return position;
     }
 
     @Override
     public UUID getUniqueId() {
         return uuid;
-    }
-
-    public abstract EntityType getType();
-
-    public abstract int getStrength();
-
-    @Override
-    public Position getPosition() {
-        return position;
     }
 }

@@ -5,14 +5,19 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class DebugOverlayView extends VBox {
-    private final Label coordinates = new Label("Coordinates: 0,0");
-    private final Label drawCount = new Label("Draw count: 0");
+    private final Label rawCoordinates = new Label("RawCoordinates: 0,0");
+    private final Label coordinatesLabel = new Label("Coordinates: 0,0");
+    private final Label roomCoordsLabel = new Label("RoomCoordinates: 0,0");
+    private final Label roomSeedLabel = new Label("RoomSeed: 0");
+    private final Label drawCountLabel = new Label("Draw count: 0");
 
     public DebugOverlayView() {
         super(5);
-        Arrays.asList(coordinates, drawCount).forEach(c -> {
+        List<Label> labels = Arrays.asList(rawCoordinates, coordinatesLabel, roomCoordsLabel, roomSeedLabel);
+        labels.forEach(c -> {
             c.setFont(new Font("Arial", 15));
             c.setStyle("-fx-text-fill: #ffffff");
         });
@@ -20,15 +25,27 @@ public class DebugOverlayView extends VBox {
         setMouseTransparent(true);
         setStyle("-fx-background-color: transparent; -fx-padding: 10;");
 
-        getChildren().addAll(coordinates, drawCount);
+        getChildren().addAll(labels);
         setVisible(false);
     }
 
-    public void setCoordinates(double x, double y) {
-        coordinates.setText("Coordinates: " + x + ", " + y);
+    public void setRawCoordinates(int x, int y) {
+        rawCoordinates.setText("RawCoordinates: " + x + ", " + y);
+    }
+
+    public void setCoordinates(int x, int y) {
+        coordinatesLabel.setText("Coordinates: " + x + ", " + y);
+    }
+
+    public void setRoomCoordinates(int x, int y) {
+        roomCoordsLabel.setText("RoomCoordinates: " + x + ", " + y);
+    }
+
+    public void setRoomSeed(long roomSeed) {
+        roomSeedLabel.setText("RoomSeed: " + roomSeed);
     }
 
     public void setDrawCount(int count) {
-        drawCount.setText("Draw count: " + count);
+        drawCountLabel.setText("Draw count: " + count);
     }
 }

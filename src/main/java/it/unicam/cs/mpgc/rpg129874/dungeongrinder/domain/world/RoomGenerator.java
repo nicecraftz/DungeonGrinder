@@ -7,39 +7,36 @@ import java.util.Random;
 import static it.unicam.cs.mpgc.rpg129874.dungeongrinder.Constant.*;
 
 public class RoomGenerator {
-    private static final int ROOM_WALL = 1;
-    private static final int ROOM_FLOOR = 2;
-    private static final int CHEST = 3;
-    private static final int ENEMY = 4;
-    private static final int ROOM_DOOR = 5;
+    public static final int ROOM_WALL = 1;
+    public static final int ROOM_FLOOR = 2;
+    public static final int CHEST = 3;
+    public static final int ROOM_DOOR = 5;
+    public static final int ROOM_DOOR_LOCK = 6;
 
     private static final int MIN_CHEST_COUNT = 1;
     private static final int MAX_CHEST_COUNT = 4;
 
-    private static final int MIN_ENEMY_COUNT = 3;
-    private static final int MAX_ENEMY_COUNT = 5;
-
-    public static int[][] generateRoomGrid(long worldSeed, int roomX, int roomY) {
-        long roomSeed = worldSeed ^ (roomX * 23099561L) ^ (roomY * 34555567L);
+    public static int[][] generateRoomGrid(long roomSeed) {
         Random random = new Random(roomSeed);
-
         int[][] roomMap = new int[Constant.MAP_WIDTH][MAP_HEIGHT];
         setupRoomWalls(roomMap);
         setupDoors(roomMap);
         setupRoomChests(random, roomMap);
-        setupEnemies(random, roomMap);
         return roomMap;
     }
 
     private static void setupDoors(int[][] roomMap) {
-        roomMap[MAP_WIDTH / 2][MAP_HEIGHT - 1] = ROOM_DOOR;
-        roomMap[MAP_WIDTH - 1][MAP_HEIGHT / 2] = ROOM_DOOR;
-        roomMap[MAP_WIDTH / 2][0] = ROOM_DOOR;
-        roomMap[0][MAP_HEIGHT / 2] = ROOM_DOOR;
+        int midX = MAP_WIDTH / 2;
+        int midY = MAP_HEIGHT / 2;
+        applyDoorZone(roomMap, midX, MAP_HEIGHT - 1, 0, -1);
+        applyDoorZone(roomMap, midX, 0, 0, 1);
+        applyDoorZone(roomMap, MAP_WIDTH - 1, midY, -1, 0);
+        applyDoorZone(roomMap, 0, midY, 1, 0);
     }
 
-    private static void setupEnemies(Random random, int[][] roomMap) {
-        shufflePlace(random, roomMap, MIN_ENEMY_COUNT, MAX_ENEMY_COUNT, ENEMY);
+    private static void applyDoorZone(int[][] roomMap, int doorX, int doorY, int offsetX, int offsetY) {
+        roomMap[doorX][doorY] = ROOM_DOOR;
+        roomMap[doorX + offsetX][doorY + offsetY] = ROOM_DOOR_LOCK;
     }
 
     private static void setupRoomChests(Random random, int[][] roomMap) {
