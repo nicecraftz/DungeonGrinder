@@ -1,42 +1,57 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.view;
 
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.controller.GameController;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.Constant;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.WorldMap;
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.assets.AssetKey;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.assets.AssetRegistry;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 
-public class GameView extends VBox {
-    private final Stage primaryStage;
-    private final Scene mainMenuScene;
+import static it.unicam.cs.mpgc.rpg129874.dungeongrinder.Constant.TILE_SIZE;
 
-    public GameView(Stage primaryStage, Scene mainMenuScene) {
-        this.primaryStage = primaryStage;
-        this.mainMenuScene = mainMenuScene;
-        setupMainMenuShortcut();
-        setupGameViewStyle();
-        addWorldMapView();
+
+public class GameView extends StackPane {
+    private static final AssetRegistry ASSET_REGISTRY = AssetRegistry.getInstance();
+    private final DebugOverlayView debugOverlay;
+    private final Canvas canvas;
+
+    public GameView() {
+        this.canvas = new Canvas(Constant.APP_WIDTH, Constant.APP_HEIGHT);
+        this.debugOverlay = new DebugOverlayView();
+        getChildren().addAll(canvas, debugOverlay);
     }
 
-    private void addWorldMapView() {
-        WorldMap worldMap = new WorldMap();
-        WorldMapView worldMapView = new WorldMapView();
-        GameController gameController = new GameController(worldMap, worldMapView);
-        getChildren().add(worldMapView);
+    public void render(WorldMap map) {
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        int[][] grid = map.getGrid();
+        for (int x = 0; x < map.getGrid().length; x++) {
+            for (int y = 0; y < map.getGrid()[0].length; y++) {
+                int cellType = grid[x][y];
+                AssetKey assetKey = null;
+                switch (cellType) {
+                    case 1 -> assetKey = AssetKey.ROOM_WALL;
+                    case 2 -> assetKey = AssetKey.ROOM_FLOOR;
+                    case 3 -> gc.setFill(Color.BLUE);
+                    case 4 -> gc.setFill(Color.YELLOW);
+                    case 5 -> gc.setFill(Color.CYAN);
+                    default -> throw new IllegalStateException("Unexpected value: " + cellType);
+                }
+
+                if (assetKey != null) {
+                    gc.drawImage(ASSET_REGISTRY.getAsset(assetKey), x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                    continue;
+                }
+
+                gc.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+            }
+        }
     }
 
-    private void setupGameViewStyle() {
-        setStyle("-fx-background-color: #808080");
+    public void toggleDebugOverlay() {
+        debugOverlay.setVisible(!debugOverlay.isVisible());
     }
 
-    private void setupMainMenuShortcut() {
-        sceneProperty().addListener((observable, oldScene, newScene) -> {
-            if (newScene == null) return;
-            newScene.setOnKeyPressed(e -> {
-                if (e.getCode() != KeyCode.ESCAPE) return;
-                primaryStage.setScene(mainMenuScene);
-            });
-        });
-    }
 }

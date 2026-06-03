@@ -23,7 +23,7 @@ public class RoomGenerator {
         long roomSeed = worldSeed ^ (roomX * 23099561L) ^ (roomY * 34555567L);
         Random random = new Random(roomSeed);
 
-        int[][] roomMap = new int[Constant.TILE_WIDTH][TILE_HEIGHT];
+        int[][] roomMap = new int[Constant.MAP_WIDTH][MAP_HEIGHT];
         setupRoomWalls(roomMap);
         setupDoors(roomMap);
         setupRoomChests(random, roomMap);
@@ -32,10 +32,10 @@ public class RoomGenerator {
     }
 
     private static void setupDoors(int[][] roomMap) {
-        roomMap[TILE_WIDTH / 2][TILE_HEIGHT - 1] = ROOM_DOOR;
-        roomMap[TILE_WIDTH - 1][TILE_HEIGHT / 2] = ROOM_DOOR;
-        roomMap[TILE_WIDTH / 2][0] = ROOM_DOOR;
-        roomMap[0][TILE_HEIGHT / 2] = ROOM_DOOR;
+        roomMap[MAP_WIDTH / 2][MAP_HEIGHT - 1] = ROOM_DOOR;
+        roomMap[MAP_WIDTH - 1][MAP_HEIGHT / 2] = ROOM_DOOR;
+        roomMap[MAP_WIDTH / 2][0] = ROOM_DOOR;
+        roomMap[0][MAP_HEIGHT / 2] = ROOM_DOOR;
     }
 
     private static void setupEnemies(Random random, int[][] roomMap) {
@@ -47,8 +47,8 @@ public class RoomGenerator {
     }
 
     private static void setupRoomWalls(int[][] roomMap) {
-        for (int x = 0; x < Constant.TILE_WIDTH; x++) {
-            for (int y = 0; y < TILE_HEIGHT; y++) {
+        for (int x = 0; x < Constant.MAP_WIDTH; x++) {
+            for (int y = 0; y < MAP_HEIGHT; y++) {
                 if (isWall(x, y)) roomMap[x][y] = ROOM_WALL;
                 else roomMap[x][y] = ROOM_FLOOR;
             }
@@ -56,7 +56,7 @@ public class RoomGenerator {
     }
 
     private static boolean isWall(int x, int y) {
-        return x == 0 || y == 0 || x == TILE_WIDTH - 1 || y == TILE_HEIGHT - 1;
+        return x == 0 || y == 0 || x == MAP_WIDTH - 1 || y == MAP_HEIGHT - 1;
     }
 
     private static boolean isOccupied(int[][] roomMap, int x, int y) {
@@ -68,8 +68,8 @@ public class RoomGenerator {
         int placed = 0;
 
         while (placed < targetCount) {
-            int x = random.nextInt(TILE_WIDTH);
-            int y = random.nextInt(TILE_HEIGHT);
+            int x = random.nextInt(MAP_WIDTH);
+            int y = random.nextInt(MAP_HEIGHT);
 
             if (isWall(x, y) || isOccupied(roomMap, x, y)) {
                 continue;

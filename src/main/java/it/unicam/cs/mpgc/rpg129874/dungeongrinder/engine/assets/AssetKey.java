@@ -1,15 +1,12 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.assets;
 
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.Launcher;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
+import javafx.scene.image.Image;
 
 public enum AssetKey {
     SKELETON("skeleton"),
-    ZOMBIE("zombie")
+    ZOMBIE("zombie"),
+    ROOM_FLOOR("tiles/room_floor"),
+    ROOM_WALL("tiles/room_wall")
     ;
 
 
@@ -18,12 +15,7 @@ public enum AssetKey {
         this.path = path;
     }
 
-    public BufferedImage getAsImage() {
-        try (InputStream resourceAsStream = Launcher.class.getClassLoader().getResourceAsStream("assets/" + path + ".png")) {
-            if (resourceAsStream == null) return null;
-            return ImageIO.read(resourceAsStream);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public Image getAsImage() {
+        return new Image("assets/" + path + ".png");
     }
 }

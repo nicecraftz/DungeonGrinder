@@ -1,12 +1,13 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.assets;
 
-import java.awt.image.BufferedImage;
+import javafx.scene.image.Image;
+
 import java.util.EnumMap;
 import java.util.Map;
 
 public class AssetRegistry {
     private static AssetRegistry instance;
-    private static final Map<AssetKey, BufferedImage> loadedAssets = new EnumMap<>(AssetKey.class);
+    private static final Map<AssetKey, Image> loadedAssets = new EnumMap<>(AssetKey.class);
 
     private AssetRegistry() {
         loadAssets();
@@ -18,7 +19,7 @@ public class AssetRegistry {
         }
     }
 
-    private BufferedImage getAsset(AssetKey key) {
+    public Image getAsset(AssetKey key) {
         return loadedAssets.get(key);
     }
 

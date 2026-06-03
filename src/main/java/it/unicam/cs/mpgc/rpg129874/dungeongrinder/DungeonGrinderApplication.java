@@ -2,7 +2,7 @@ package it.unicam.cs.mpgc.rpg129874.dungeongrinder;
 
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.controller.GameController;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.WorldMap;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.view.WorldMapView;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.view.GameView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -12,15 +12,15 @@ public class DungeonGrinderApplication extends Application {
 
     @Override
     public void start(Stage stage) {
+        stage.setResizable(false);
         stage.setTitle(APPLICATION_NAME);
-        stage.setWidth(Constant.NORMALIZED_APP_WIDTH);
-        stage.setHeight(Constant.NORMALIZED_APP_HEIGHT);
-        
-        WorldMap mapModel = new WorldMap();
-        WorldMapView mapView = new WorldMapView();
-        GameController controller = new GameController(mapModel, mapView);
 
-        Scene gameScene = new Scene(mapView);
+        WorldMap mapModel = new WorldMap();
+        GameView mapView = new GameView();
+        new GameController(mapModel, mapView);
+
+        Scene gameScene = new Scene(mapView, Constant.APP_WIDTH, Constant.APP_HEIGHT);
+
         stage.setScene(gameScene);
         stage.show();
     }
