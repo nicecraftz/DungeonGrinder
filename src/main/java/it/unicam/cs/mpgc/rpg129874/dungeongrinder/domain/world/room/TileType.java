@@ -1,29 +1,27 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room;
 
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.AssetKey;
+
 public enum TileType {
-    WALL(false),
-    FLOOR(true),
-    CHEST(false),
-    DOOR(true),
-    DOOR_LOCK(true);
+    WALL(false, AssetKey.ROOM_WALL),
+    FLOOR(true, AssetKey.ROOM_FLOOR),
+    CHEST(false, AssetKey.CHEST),
+    DOOR(true, AssetKey.HOLE),
+    DOOR_LOCK(true, AssetKey.ROOM_FLOOR);
 
     private final boolean walkable;
+    private final AssetKey assetKey;
 
-    TileType(boolean walkable) {
+    TileType(boolean walkable, AssetKey assetKey) {
         this.walkable = walkable;
+        this.assetKey = assetKey;
     }
 
     public boolean isWalkable() {
         return walkable;
     }
 
-    public static TileType fromId(int id) {
-        return switch (id) {
-            case 1 -> WALL;
-            case 3 -> CHEST;
-            case 5 -> DOOR;
-            case 6 -> DOOR_LOCK;
-            default -> FLOOR;
-        };
+    public AssetKey getAssetKey() {
+        return assetKey;
     }
 }

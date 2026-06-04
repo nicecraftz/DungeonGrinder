@@ -1,6 +1,7 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity;
 
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Position;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.AssetKey;
 
 public abstract class HumanEntity extends LivingEntity {
     private int level;
@@ -36,6 +37,11 @@ public abstract class HumanEntity extends LivingEntity {
         }
     }
 
+    @Override
+    public AssetKey getAssetKey() {
+        return AssetKey.DOC_IDLE;
+    }
+    
     public int getLevel() {
         return level;
     }

@@ -1,27 +1,24 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room;
 
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.WorldEnvironment;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Point;
-
-import java.util.Random;
 
 public class GameRoom {
-    private final Point point;
+    private final RoomPoint roomPoint;
     private final long seed;
     private final RoomAttributes roomAttributes;
 
-    public GameRoom(WorldEnvironment environment, Point point) {
-        this.point = point;
-        this.seed = environment.getSeed() ^ (point.x() * 23099561L) ^ (point.y() * 34555567L);
+    public GameRoom(WorldEnvironment environment, RoomPoint roomPoint) {
+        this.roomPoint = roomPoint;
+        this.seed = environment.getSeed() ^ (roomPoint.x() * 23099561L) ^ (roomPoint.y() * 34555567L);
         this.roomAttributes = new RoomAttributes(seed);
     }
 
-    public Point getPoint() {
-        return point;
+    public RoomPoint getPoint() {
+        return roomPoint;
     }
 
     public TileType[][] getGrid() {
-        return RoomGenerator.generateRoomGrid(new Random(getSeed()), roomAttributes);
+        return RoomGenerator.generateRoomGrid(seed, roomAttributes);
     }
 
     public long getSeed() {

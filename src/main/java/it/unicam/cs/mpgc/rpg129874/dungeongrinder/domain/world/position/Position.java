@@ -30,11 +30,17 @@ public class Position {
         this.y = y;
     }
 
-    public Position toRoomPosition() {
-        return new Position(x / TILE_SIZE, y / TILE_SIZE);
+    public double distance(Position otherPosition) {
+        int deltaX = this.x - otherPosition.getX();
+        int deltaY = this.y - otherPosition.getY();
+        return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     }
 
     public static Position center() {
         return new Position(APP_WIDTH / 2, APP_HEIGHT / 2);
+    }
+
+    public TilePosition toTilePosition() {
+        return new TilePosition(x / TILE_SIZE, y / TILE_SIZE);
     }
 }

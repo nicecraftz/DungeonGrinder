@@ -17,21 +17,6 @@ public class WorldEntityContainer implements EntityContainer {
     }
 
     @Override
-    public void addEntity(Entity entity) {
-        entities.add(entity);
-    }
-
-    @Override
-    public void removeEntity(Entity entity) {
-        entities.remove(entity);
-    }
-
-    @Override
-    public void removeAllEntities() {
-        entities.clear();
-    }
-
-    @Override
     public Set<Entity> getEntities() {
         return entities;
     }

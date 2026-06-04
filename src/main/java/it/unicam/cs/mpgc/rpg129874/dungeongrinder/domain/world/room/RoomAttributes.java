@@ -3,8 +3,8 @@ package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room;
 import java.util.Random;
 
 public class RoomAttributes {
-    private static final int MAX_CHEST_PER_ROOM = 5;
-    private static final int MIN_CHEST_PER_ROOM = 2;
+    private static final int MAX_CHEST_PER_ROOM = 8;
+    private static final int MIN_CHEST_PER_ROOM = 4;
 
     private static final int MIN_ENEMIES_PER_ROOM = 5;
     private static final int MAX_ENEMIES_PER_ROOM = 10;

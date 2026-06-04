@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.view;
 
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room.TileType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -13,10 +14,12 @@ public class DebugOverlayView extends VBox {
     private final Label roomCoordsLabel = new Label("RoomCoordinates: 0,0");
     private final Label roomSeedLabel = new Label("RoomSeed: 0");
     private final Label drawCountLabel = new Label("Draw count: 0");
+    private final Label currentTile = new Label("Current Tile: ");
+    private final Label fpsLabel = new Label("FPS: 0");
 
     public DebugOverlayView() {
         super(5);
-        List<Label> labels = Arrays.asList(rawCoordinates, coordinatesLabel, roomCoordsLabel, roomSeedLabel);
+        List<Label> labels = Arrays.asList(rawCoordinates, coordinatesLabel, roomCoordsLabel, roomSeedLabel, fpsLabel, currentTile);
         labels.forEach(c -> {
             c.setFont(new Font("Arial", 15));
             c.setStyle("-fx-text-fill: #ffffff");
@@ -24,9 +27,13 @@ public class DebugOverlayView extends VBox {
 
         setMouseTransparent(true);
         setStyle("-fx-background-color: transparent; -fx-padding: 10;");
-
         getChildren().addAll(labels);
+
         setVisible(false);
+    }
+
+    public void setFps(double fps) {
+        fpsLabel.setText(String.format("FPS: %.0f", fps));
     }
 
     public void setRawCoordinates(int x, int y) {
@@ -45,7 +52,7 @@ public class DebugOverlayView extends VBox {
         roomSeedLabel.setText("RoomSeed: " + roomSeed);
     }
 
-    public void setDrawCount(int count) {
-        drawCountLabel.setText("Draw count: " + count);
+    public void setCurrentTile(TileType tile) {
+        currentTile.setText("Current Tile: " + tile.name());
     }
 }

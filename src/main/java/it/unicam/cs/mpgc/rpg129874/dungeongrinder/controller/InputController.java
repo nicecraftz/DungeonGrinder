@@ -22,7 +22,11 @@ public class InputController {
     private void configureInputListener() {
         gameView.sceneProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) return;
-            newValue.setOnKeyPressed(event -> pressedKeys.add(event.getCode()));
+            newValue.setOnKeyPressed(event -> {
+                KeyCode code = event.getCode();
+                if (code == KeyCode.F3) gameView.toggleDebugOverlay();
+                pressedKeys.add(code);
+            });
             newValue.setOnKeyReleased(event -> pressedKeys.remove(event.getCode()));
         });
     }

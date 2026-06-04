@@ -10,6 +10,7 @@ public class GameController {
     private final GameLoopController gameLoopController;
     private final DebugOverlayController debugOverlayController;
     private final InputController inputController;
+    private final EntityController entityController;
 
     public GameController(WorldEnvironment environment, GameView gameView) {
         this.environment = environment;
@@ -17,11 +18,13 @@ public class GameController {
         this.gameLoopController = new GameLoopController(this);
         this.debugOverlayController = new DebugOverlayController(gameView.getDebugOverlay());
         this.inputController = new InputController(gameView, new MovementSystem(environment));
+        this.entityController = new EntityController(environment);
     }
 
-    public void tick() {
-        debugOverlayController.update(environment);
+    public void tick(double fps) {
+        debugOverlayController.update(environment, fps);
         inputController.processInput();
+        entityController.pathfindEntities();
         gameView.render(environment);
     }
 }

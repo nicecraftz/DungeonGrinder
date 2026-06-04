@@ -8,7 +8,8 @@ import static it.unicam.cs.mpgc.rpg129874.dungeongrinder.Constant.*;
 
 public class RoomGenerator {
 
-    public static TileType[][] generateRoomGrid(Random random, RoomAttributes roomAttributes) {
+    public static TileType[][] generateRoomGrid(long seed, RoomAttributes roomAttributes) {
+        Random random = new Random(seed);
         TileType[][] roomMap = new TileType[Constant.MAP_WIDTH][MAP_HEIGHT];
         setupRoomWalls(roomMap);
         setupDoors(roomMap);

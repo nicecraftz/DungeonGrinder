@@ -1,17 +1,18 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.view;
 
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.Constant;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.Entity;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.LivingEntity;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.WorldEnvironment;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Position;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room.TileType;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.WorldMap;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.AssetKey;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.AssetRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 
-import java.util.Stack;
+import java.util.Set;
 
 import static it.unicam.cs.mpgc.rpg129874.dungeongrinder.Constant.TILE_SIZE;
 
@@ -27,39 +28,43 @@ public class GameView extends StackPane {
         getChildren().addAll(canvas, debugOverlay);
     }
 
+    private void render(GraphicsContext gc, AssetKey assetKey, int x, int y) {
+        gc.drawImage(ASSET_REGISTRY.getAsset(assetKey).getDefaultImage(), x, y, TILE_SIZE, TILE_SIZE);
+    }
+
+    private void renderTile(GraphicsContext gc, AssetKey assetKey, int x, int y) {
+        render(gc, assetKey, x * TILE_SIZE, y * TILE_SIZE);
+    }
+
     public void render(WorldEnvironment environment) {
-        Stack<AssetKey> renderStack = new Stack<>();
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setImageSmoothing(false);
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         for (int x = 0; x < Constant.MAP_WIDTH; x++) {
             for (int y = 0; y < Constant.MAP_HEIGHT; y++) {
                 TileType tileType = environment.getTileAt(x, y);
-
-                switch (tileType) {
-                    case WALL -> renderStack.push(AssetKey.ROOM_WALL);
-                    case FLOOR, DOOR_LOCK -> renderStack.push(AssetKey.ROOM_FLOOR);
-                    case CHEST -> {
-                        renderStack.push(AssetKey.CHEST);
-                        renderStack.push(AssetKey.ROOM_FLOOR);
-                    }
-                    case DOOR -> renderStack.push(AssetKey.HOLE);
-                    default -> throw new IllegalStateException("Unexpected value: " + tileType);
-                }
-
-                while (!renderStack.isEmpty()) {
-                    gc.drawImage(ASSET_REGISTRY.getAsset(renderStack.pop()).getDefaultImage(), x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-                }
+                if (tileType == TileType.CHEST) renderTile(gc, AssetKey.ROOM_FLOOR, x, y);
+                renderTile(gc, tileType.getAssetKey(), x, y);
             }
         }
 
+        Set<Entity> entities = environment.getEntityContainer().getEntities();
+        for (Entity entity : entities) {
+            if (!(entity instanceof LivingEntity livingEntity)) continue;
+            Position position = livingEntity.getPosition();
+            render(gc, livingEntity.getAssetKey(), position.getX(), position.getY());
+        }
+
         Position position = environment.getPlayer().getPosition();
-        gc.drawImage(ASSET_REGISTRY.getAsset(AssetKey.CHORT_IDLE).getRandom(), position.getX(), position.getY(), TILE_SIZE, TILE_SIZE);
+        render(gc, AssetKey.DOC_IDLE, position.getX(), position.getY() - 5);
     }
 
     public DebugOverlayView getDebugOverlay() {
         return debugOverlay;
+    }
+
+    public void toggleDebugOverlay() {
+        debugOverlay.setVisible(!debugOverlay.isVisible());
     }
 
 }

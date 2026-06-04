@@ -4,7 +4,7 @@ import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Position
 
 import java.util.UUID;
 
-public abstract class LivingEntity implements Entity, Positionable {
+public abstract class LivingEntity implements Entity {
     private final UUID uuid;
     private final EntityDescriptor descriptor;
     private final Position position;
