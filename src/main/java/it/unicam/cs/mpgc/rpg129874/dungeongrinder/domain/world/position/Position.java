@@ -1,10 +1,8 @@
-package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world;
+package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position;
 
 import static it.unicam.cs.mpgc.rpg129874.dungeongrinder.Constant.*;
 
 public class Position {
-    public static Position CENTER = new Position(APP_WIDTH / 2, APP_HEIGHT / 2);
-
     private int x;
     private int y;
 
@@ -34,5 +32,9 @@ public class Position {
 
     public Position toRoomPosition() {
         return new Position(x / TILE_SIZE, y / TILE_SIZE);
+    }
+
+    public static Position center() {
+        return new Position(APP_WIDTH / 2, APP_HEIGHT / 2);
     }
 }

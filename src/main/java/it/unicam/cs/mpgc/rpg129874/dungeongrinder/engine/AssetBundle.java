@@ -1,13 +1,12 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine;
 
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.WorldMap;
 import javafx.scene.image.Image;
 
 import java.util.List;
 import java.util.Random;
 
 public class AssetBundle {
-    private static final Random RANDOM = new Random(WorldMap.SEED);
+    private static final Random RANDOM = new Random();
     private final List<Image> images;
 
     public AssetBundle(List<Image> images) {

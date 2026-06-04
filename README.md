@@ -71,3 +71,8 @@ logica del gioco.
 - Incantesimi
 
 ---
+
+## Uso dell'AI
+
+L'uso dell'AI è stato limitato a scopi di documentazione, code-review e casi d'uso per i design pattern, nessuna parte
+di codice del progetto è stata generata da AI.

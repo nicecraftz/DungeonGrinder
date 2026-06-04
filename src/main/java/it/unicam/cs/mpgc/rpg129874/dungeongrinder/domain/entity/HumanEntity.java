@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity;
 
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.Position;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Position;
 
 public abstract class HumanEntity extends LivingEntity {
     private int level;

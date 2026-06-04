@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class DungeonGrinderApplication extends Application {
+    private static final long SEED = 0xcaffe;
+    private static final WorldMap WORLD_MAP = new WorldMap(SEED);
     public static final String APPLICATION_NAME = "Dungeon Grinder";
 
     @Override
@@ -15,10 +17,8 @@ public class DungeonGrinderApplication extends Application {
         stage.setResizable(false);
         stage.setTitle(APPLICATION_NAME);
 
-        WorldMap mapModel = new WorldMap();
         GameView mapView = new GameView();
-        new GameController(mapModel, mapView);
-
+        new GameController(WORLD_MAP, mapView);
         Scene gameScene = new Scene(mapView, Constant.APP_WIDTH, Constant.APP_HEIGHT);
 
         stage.setScene(gameScene);

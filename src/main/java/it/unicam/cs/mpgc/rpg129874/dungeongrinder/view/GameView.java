@@ -1,16 +1,15 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.view;
 
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.Constant;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.Positionable;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.Position;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.RoomGenerator;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.WorldEnvironment;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Position;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room.TileType;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.WorldMap;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.AssetKey;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.AssetRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 
 import java.util.Stack;
 
@@ -28,34 +27,34 @@ public class GameView extends StackPane {
         getChildren().addAll(canvas, debugOverlay);
     }
 
-    public void render(WorldMap map, Positionable positionable) {
+    public void render(WorldEnvironment environment) {
+        Stack<AssetKey> renderStack = new Stack<>();
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setImageSmoothing(false);
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        int[][] grid = map.getGrid();
-        for (int x = 0; x < map.getGrid().length; x++) {
-            for (int y = 0; y < map.getGrid()[0].length; y++) {
-                int cellType = grid[x][y];
-                Stack<AssetKey> keyStack = new Stack<>();
-                switch (cellType) {
-                    case RoomGenerator.ROOM_WALL -> keyStack.push(AssetKey.ROOM_WALL);
-                    case RoomGenerator.ROOM_FLOOR,
-                         RoomGenerator.ROOM_DOOR_LOCK -> keyStack.push(AssetKey.ROOM_FLOOR);
-                    case RoomGenerator.CHEST -> {
-                        keyStack.push(AssetKey.CHEST);
-                        keyStack.push(AssetKey.ROOM_FLOOR);
+
+        for (int x = 0; x < Constant.MAP_WIDTH; x++) {
+            for (int y = 0; y < Constant.MAP_HEIGHT; y++) {
+                TileType tileType = environment.getTileAt(x, y);
+
+                switch (tileType) {
+                    case WALL -> renderStack.push(AssetKey.ROOM_WALL);
+                    case FLOOR, DOOR_LOCK -> renderStack.push(AssetKey.ROOM_FLOOR);
+                    case CHEST -> {
+                        renderStack.push(AssetKey.CHEST);
+                        renderStack.push(AssetKey.ROOM_FLOOR);
                     }
-                    case RoomGenerator.ROOM_DOOR -> keyStack.push(AssetKey.HOLE);
-                    default -> throw new IllegalStateException("Unexpected value: " + cellType);
+                    case DOOR -> renderStack.push(AssetKey.HOLE);
+                    default -> throw new IllegalStateException("Unexpected value: " + tileType);
                 }
 
-                while (!keyStack.isEmpty()) {
-                    gc.drawImage(ASSET_REGISTRY.getAsset(keyStack.pop()).getDefaultImage(), x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                while (!renderStack.isEmpty()) {
+                    gc.drawImage(ASSET_REGISTRY.getAsset(renderStack.pop()).getDefaultImage(), x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 }
             }
         }
 
-        Position position = positionable.getPosition();
+        Position position = environment.getPlayer().getPosition();
         gc.drawImage(ASSET_REGISTRY.getAsset(AssetKey.CHORT_IDLE).getRandom(), position.getX(), position.getY(), TILE_SIZE, TILE_SIZE);
     }
 

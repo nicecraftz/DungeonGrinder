@@ -1,58 +1,62 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world;
 
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.Constant;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.Entity;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.EntityContainer;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.player.Player;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Point;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room.GameRoom;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room.TileType;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
+import static it.unicam.cs.mpgc.rpg129874.dungeongrinder.Constant.TILE_SIZE;
 
-public class WorldMap {
-    public static final long SEED = ThreadLocalRandom.current().nextLong();
-    private GameRoom gameRoom = new GameRoom(0, 0);
-    private Set<Entity> entities = new HashSet<>();
-    private int[][] grid = gameRoom.getGrid();
+public class WorldMap implements WorldEnvironment {
+    private final long seed;
+    private final EntityContainer entityContainer;
 
-    public void setGameRoom(GameRoom gameRoom) {
-        this.gameRoom = gameRoom;
-        this.grid = gameRoom.getGrid();
+    private GameRoom currentRoom = new GameRoom(this, Point.zero());
+    private TileType[][] currentGrid = currentRoom.getGrid();
+
+    public WorldMap(long seed) {
+        this.seed = seed;
+        entityContainer = new WorldEntityContainer(new Player());
     }
 
-    public int[][] getGrid() {
-        return grid;
+    @Override
+    public long getSeed() {
+        return seed;
     }
 
-    public GameRoom getGameRoom() {
-        return gameRoom;
+    @Override
+    public TileType getTileAt(int x, int y) {
+        return currentGrid[x][y];
     }
 
-    public boolean isAreaWalkable(int x, int y, int width, int height) {
-        if (x < 0 || x + width > Constant.APP_WIDTH ||
-            y < 0 || y + height > Constant.APP_HEIGHT) {
+    @Override
+    public boolean isAreaWalkable(int x, int y) {
+        if (x < 0 || x + TILE_SIZE > Constant.APP_WIDTH || y < 0 || y + TILE_SIZE > Constant.APP_HEIGHT) {
             return false;
         }
+        int tileX1 = x / TILE_SIZE;
+        int tileY1 = y / TILE_SIZE;
+        int tileX2 = (x + TILE_SIZE - 1) / TILE_SIZE;
+        int tileY2 = (y + TILE_SIZE - 1) / TILE_SIZE;
 
-        int tileX1 = x / Constant.TILE_SIZE;
-        int tileY1 = y / Constant.TILE_SIZE;
-        int tileX2 = (x + width - 1) / Constant.TILE_SIZE;
-        int tileY2 = (y + height - 1) / Constant.TILE_SIZE;
-
-        return !isWallTile(tileX1, tileY1) && !isWallTile(tileX2, tileY1) &&
-               !isWallTile(tileX1, tileY2) && !isWallTile(tileX2, tileY2);
+        return getTileAt(tileX1, tileY1).isWalkable() && getTileAt(tileX2, tileY1).isWalkable() && getTileAt(tileX1, tileY2).isWalkable() && getTileAt(tileX2, tileY2).isWalkable();
     }
 
-    public boolean isWallTile(int tileX, int tileY) {
-        if (tileX < 0 || tileX >= Constant.MAP_WIDTH || tileY < 0 || tileY >= Constant.MAP_HEIGHT) {
-            return true;
-        }
-        return grid[tileX][tileY] == RoomGenerator.ROOM_WALL;
+    @Override
+    public EntityContainer getEntityContainer() {
+        return entityContainer;
     }
 
-    public boolean isChestTile(int x, int y) {
-        return grid[x][y] == RoomGenerator.CHEST;
+    @Override
+    public GameRoom getCurrentRoom() {
+        return currentRoom;
     }
 
-    public boolean isDoorTile(int x, int y) {
-        return grid[x][y] == RoomGenerator.ROOM_DOOR_LOCK;
+    @Override
+    public void setCurrentRoom(GameRoom room) {
+        this.currentRoom = room;
+        this.currentGrid = room.getGrid();
     }
 }

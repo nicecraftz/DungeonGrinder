@@ -7,7 +7,7 @@ public interface Constant {
     int DESKTOP_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
     int APP_VIEW_RATIO = 2;
 
-    int TILE_SIZE = 32;
+    int TILE_SIZE = 64;
 
     int WIDTH = DESKTOP_WIDTH / APP_VIEW_RATIO;
     int HEIGHT = DESKTOP_HEIGHT / APP_VIEW_RATIO;
