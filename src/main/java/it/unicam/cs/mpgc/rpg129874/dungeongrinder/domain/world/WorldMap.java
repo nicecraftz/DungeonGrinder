@@ -2,10 +2,9 @@ package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world;
 
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.Constant;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.EntityContainer;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.hostile.Skeleton;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.player.Player;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room.RoomPoint;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room.GameRoom;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room.RoomPoint;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room.TileType;
 
 import static it.unicam.cs.mpgc.rpg129874.dungeongrinder.Constant.TILE_SIZE;
@@ -22,7 +21,6 @@ public class WorldMap implements WorldEnvironment {
         this.currentRoom = new GameRoom(this, RoomPoint.zero());
         this.currentGrid = currentRoom.getGrid();
         this.entityContainer = new WorldEntityContainer(new Player());
-        entityContainer.addEntity(new Skeleton());
     }
 
     @Override

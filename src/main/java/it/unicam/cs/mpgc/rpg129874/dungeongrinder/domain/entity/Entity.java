@@ -1,7 +1,7 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity;
 
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Position;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.AssetKey;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.asset.AssetKey;
 
 import java.util.UUID;
 

@@ -1,8 +1,7 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.controller;
 
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Direction;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.WorldMap;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.MovementSystem;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.player.Player;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.physics.MovementSystem;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.view.GameView;
 import javafx.scene.input.KeyCode;
 
@@ -12,10 +11,14 @@ public class InputController {
     private final HashSet<KeyCode> pressedKeys = new HashSet<>();
     private final GameView gameView;
     private final MovementSystem movementSystem;
+    private final MovementInputController movementInputController;
+    private final Player player;
 
-    public InputController(GameView gameView, MovementSystem movementSystem) {
+    public InputController(GameView gameView, MovementSystem movementSystem, Player player) {
         this.gameView = gameView;
         this.movementSystem = movementSystem;
+        this.player = player;
+        this.movementInputController = new MovementInputController();
         configureInputListener();
     }
 
@@ -33,9 +36,6 @@ public class InputController {
 
     public void processInput() {
         if (pressedKeys.isEmpty()) return;
-        if (pressedKeys.contains(KeyCode.W)) movementSystem.tryMove(Direction.UP);
-        if (pressedKeys.contains(KeyCode.S)) movementSystem.tryMove(Direction.DOWN);
-        if (pressedKeys.contains(KeyCode.A)) movementSystem.tryMove(Direction.LEFT);
-        if (pressedKeys.contains(KeyCode.D)) movementSystem.tryMove(Direction.RIGHT);
+        movementInputController.process(pressedKeys, player, movementSystem);
     }
 }

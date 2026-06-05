@@ -6,8 +6,8 @@ import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.LivingEntity;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.WorldEnvironment;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Position;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room.TileType;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.AssetKey;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.AssetRegistry;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.asset.AssetKey;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.asset.AssetRegistry;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
@@ -38,6 +38,7 @@ public class GameView extends StackPane {
 
     public void render(WorldEnvironment environment) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.clearRect(0, 0, Constant.APP_WIDTH, Constant.APP_HEIGHT);
         gc.setImageSmoothing(false);
 
         for (int x = 0; x < Constant.MAP_WIDTH; x++) {

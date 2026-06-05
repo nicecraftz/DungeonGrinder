@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine;
+package it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.asset;
 
 import javafx.scene.image.Image;
 

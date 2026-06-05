@@ -4,6 +4,7 @@ import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.player.Player;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Position;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 public interface EntityContainer {
@@ -22,6 +23,21 @@ public interface EntityContainer {
     default void removeAllEntities() {
         getEntities().clear();
         getEntities().add(getPlayer());
+    }
+
+    default Optional<Entity> getNearestEntity(Position origin, int maxDistance) {
+        Set<Entity> nearbyEntities = getNearbyEntities(origin, maxDistance);
+
+        Entity nearest = null;
+        Double minDistance = null;
+        for (Entity nearbyEntity : nearbyEntities) {
+            if (minDistance == null || nearbyEntity.getPosition().distance(origin) < minDistance) {
+                minDistance = nearbyEntity.getPosition().distance(origin);
+                nearest = nearbyEntity;
+            }
+        }
+
+        return Optional.ofNullable(nearest);
     }
 
     default Set<Entity> getNearbyEntities(Position origin, int maxDistance) {

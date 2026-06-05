@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room;
 
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.AssetKey;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.asset.AssetKey;
 
 public enum TileType {
     WALL(false, AssetKey.ROOM_WALL),

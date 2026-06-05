@@ -1,5 +1,6 @@
-package it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine;
+package it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.physics;
 
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.Entity;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.player.Player;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.WorldEnvironment;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Direction;
@@ -12,9 +13,9 @@ public class MovementSystem {
         this.environment = environment;
     }
 
-    public void tryMove(Direction direction) {
-        Player player = environment.getPlayer();
-        Position position = player.getPosition();
+    public void tryMove(Entity entity, Direction direction) {
+        Position position = entity.getPosition();
+        int speed = entity.getDescriptor().attributes().speed();
 
         int oldX = position.getX();
         int oldY = position.getY();
@@ -22,12 +23,12 @@ public class MovementSystem {
         boolean movedY = false;
         if (direction == Direction.UP) {
             movedY = true;
-            player.moveForward();
+            position.setY(position.getY() - speed);
         }
 
         if (direction == Direction.DOWN) {
             movedY = true;
-            player.moveBackwards();
+            position.setY(position.getY() + speed);
         }
 
         if (movedY && !environment.isAreaWalkable(position)) {
@@ -36,11 +37,11 @@ public class MovementSystem {
 
         boolean movedX = false;
         if (direction == Direction.LEFT) {
-            player.moveLeft();
+            position.setX(position.getX() - speed);
             movedX = true;
         }
         if (direction == Direction.RIGHT) {
-            player.moveRight();
+            position.setX(position.getX() + speed);
             movedX = true;
         }
 

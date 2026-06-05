@@ -4,5 +4,5 @@ import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Position
 
 public interface Pathfinder {
 
-    void moveToBestPosition(Position origin, Position target, int stepSpeed);
+    Vector2D calculateMovement(Position origin, Position target, int stepSpeed);
 }

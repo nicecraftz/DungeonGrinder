@@ -13,7 +13,6 @@ public class DebugOverlayView extends VBox {
     private final Label coordinatesLabel = new Label("Coordinates: 0,0");
     private final Label roomCoordsLabel = new Label("RoomCoordinates: 0,0");
     private final Label roomSeedLabel = new Label("RoomSeed: 0");
-    private final Label drawCountLabel = new Label("Draw count: 0");
     private final Label currentTile = new Label("Current Tile: ");
     private final Label fpsLabel = new Label("FPS: 0");
 
