@@ -14,9 +14,10 @@ un tileset avanzato e gratuito perfetto per l'use-case e l'idea del gioco.
 
 ## Funzionalità Presenti
 
-- Debug Screen
-- Movement System Basilare
+- Movement System Basilare da tastiera (W,A,S,D)
+- Sistema di Goal Modulare per le Entità (Pathfinding, Attack)
 - Asset Registry System
+- Debug Screen
 
 ---
 
@@ -36,11 +37,10 @@ ottimizzato.
 Questa scelta architetturale è stata ritenuta ottimale in quanto l'impatto prestazionale in fase di avvio risulta
 irrilevante ai fini del gameplay. Sebbene molti titoli del genere dungeon crawler operino tradizionalmente a 30 FPS,
 l'applicazione corrente garantisce un target di 60 FPS. È inoltre opportuno evidenziare che la gestione del game/render
-loop,
-affidata alla
+loop, affidata alla
 classe [AnimationTimer](https://openjfx.io/javadoc/17/javafx.graphics/javafx/animation/AnimationTimer.html) di JavaFX,
-si sincronizza nativamente con la frequenza di aggiornamento (refresh
-rate) del display in uso, garantendo la necessaria fluidità senza sovraccaricare la CPU, nonostante tutto per migliorare
+si sincronizza nativamente con la frequenza di aggiornamento (refresh rate) del display in uso, garantendo la necessaria
+fluidità senza sovraccaricare la CPU, nonostante tutto per migliorare
 le prestazioni ed evitare desync è stato implementato un delta-counter che permette di evitare uno "speedup" della
 logica del gioco.
 
@@ -61,8 +61,6 @@ logica del gioco.
 
 ### Possibili Miglioramenti Futuri
 
-- Antialiasing / Scaling (essendo le texture basate su multipli di 16 sarebbe possibile scalarle senza perdere qualità e
-  avere effetto blur.)
 - Animazioni Sprite (Attualmente il gioco è statico in quanto non ho nessuna familiarità con i design pattern applicati
   all'interno del Game Development)
 - Aggiungere più nemici / Entità (Magari dei mercanti che per degli item speciali ti danno altri oggetti)
@@ -74,5 +72,6 @@ logica del gioco.
 
 ## Uso dell'AI
 
-L'uso dell'AI è stato limitato a scopi di documentazione, code-review e casi d'uso per i design pattern, nessuna parte
+L'uso dell'AI è stato limitato a scopi di documentazione (apprendimento), code-review e studio dei casi d'uso per i
+design pattern, nessuna parte
 di codice del progetto è stata generata da AI.
