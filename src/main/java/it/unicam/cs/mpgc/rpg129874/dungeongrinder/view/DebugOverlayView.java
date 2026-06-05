@@ -15,10 +15,12 @@ public class DebugOverlayView extends VBox {
     private final Label roomSeedLabel = new Label("RoomSeed: 0");
     private final Label currentTile = new Label("Current Tile: ");
     private final Label fpsLabel = new Label("FPS: 0");
+    private final Label currentVelocity = new Label("Velocity: ");
 
     public DebugOverlayView() {
         super(5);
-        List<Label> labels = Arrays.asList(rawCoordinates, coordinatesLabel, roomCoordsLabel, roomSeedLabel, fpsLabel, currentTile);
+        List<Label> labels = Arrays.asList(rawCoordinates, coordinatesLabel, roomCoordsLabel, roomSeedLabel, fpsLabel, currentTile,
+                currentVelocity);
         labels.forEach(c -> {
             c.setFont(new Font("Arial", 15));
             c.setStyle("-fx-text-fill: #ffffff");
@@ -53,5 +55,9 @@ public class DebugOverlayView extends VBox {
 
     public void setCurrentTile(TileType tile) {
         currentTile.setText("Current Tile: " + tile.name());
+    }
+
+    public void setCurrentVelocity(int x, int y) {
+        currentVelocity.setText("Velocity: " + x + ", " + y);
     }
 }

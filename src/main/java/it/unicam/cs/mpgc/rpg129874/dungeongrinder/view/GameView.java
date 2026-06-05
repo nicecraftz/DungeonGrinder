@@ -51,13 +51,9 @@ public class GameView extends StackPane {
 
         Set<Entity> entities = environment.getEntityContainer().getEntities();
         for (Entity entity : entities) {
-            if (!(entity instanceof LivingEntity livingEntity)) continue;
-            Position position = livingEntity.getPosition();
-            render(gc, livingEntity.getAssetKey(), position.getX(), position.getY());
+            Position position = entity.getPosition();
+            render(gc, entity.getAssetKey(), position.getX(), position.getY());
         }
-
-        Position position = environment.getPlayer().getPosition();
-        render(gc, AssetKey.DOC_IDLE, position.getX(), position.getY() - 5);
     }
 
     public DebugOverlayView getDebugOverlay() {

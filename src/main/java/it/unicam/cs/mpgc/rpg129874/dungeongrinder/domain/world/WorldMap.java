@@ -1,8 +1,9 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world;
 
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.Constant;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.EntityContainer;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.creature.BaseCreature;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.player.Player;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Position;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room.GameRoom;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room.RoomPoint;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room.TileType;
@@ -11,6 +12,7 @@ import static it.unicam.cs.mpgc.rpg129874.dungeongrinder.Constant.TILE_SIZE;
 
 public class WorldMap implements WorldEnvironment {
     private final long seed;
+    private final Player player;
     private final EntityContainer entityContainer;
 
     private GameRoom currentRoom;
@@ -18,9 +20,13 @@ public class WorldMap implements WorldEnvironment {
 
     public WorldMap(long seed) {
         this.seed = seed;
+        this.player = new Player();
+        this.entityContainer = new WorldEntityContainer();
+        entityContainer.getEntities().add(player);
+        entityContainer.getEntities().add(new BaseCreature(this, Position.center()));
+
         this.currentRoom = new GameRoom(this, RoomPoint.zero());
         this.currentGrid = currentRoom.getGrid();
-        this.entityContainer = new WorldEntityContainer(new Player());
     }
 
     @Override
@@ -43,12 +49,18 @@ public class WorldMap implements WorldEnvironment {
         int tileX2 = (x + TILE_SIZE - 1) / TILE_SIZE;
         int tileY2 = (y + TILE_SIZE - 1) / TILE_SIZE;
 
-        return getTileAt(tileX1, tileY1).isWalkable() && getTileAt(tileX2, tileY1).isWalkable() && getTileAt(tileX1, tileY2).isWalkable() && getTileAt(tileX2, tileY2).isWalkable();
+        return getTileAt(tileX1, tileY1).isWalkable() && getTileAt(tileX2, tileY1).isWalkable() && getTileAt(tileX1,
+                tileY2).isWalkable() && getTileAt(tileX2, tileY2).isWalkable();
     }
 
     @Override
     public EntityContainer getEntityContainer() {
         return entityContainer;
+    }
+
+    @Override
+    public Player getPlayer() {
+        return player;
     }
 
     @Override

@@ -1,7 +1,8 @@
-package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity;
+package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.creature;
 
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.LivingEntity;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.compound.EntityDescriptor;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.goal.GoalSelector;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.WorldEnvironment;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Position;
 
 public abstract class Creature extends LivingEntity {

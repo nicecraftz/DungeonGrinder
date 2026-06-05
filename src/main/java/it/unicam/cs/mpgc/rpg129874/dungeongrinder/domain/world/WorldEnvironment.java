@@ -1,6 +1,5 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world;
 
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.EntityContainer;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.player.Player;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Position;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.TilePosition;
@@ -15,11 +14,13 @@ public interface WorldEnvironment {
 
     EntityContainer getEntityContainer();
 
-    default Player getPlayer() {
-        return getEntityContainer().getPlayer();
-    }
+    Player getPlayer();
 
     boolean isAreaWalkable(int x, int y);
+
+    GameRoom getCurrentRoom();
+
+    void setCurrentRoom(GameRoom room);
 
     default boolean isAreaWalkable(Position position) {
         return isAreaWalkable(position.getX(), position.getY());
@@ -29,7 +30,4 @@ public interface WorldEnvironment {
         return getTileAt(tilePosition.x(), tilePosition.y());
     }
 
-    GameRoom getCurrentRoom();
-
-    void setCurrentRoom(GameRoom room);
 }

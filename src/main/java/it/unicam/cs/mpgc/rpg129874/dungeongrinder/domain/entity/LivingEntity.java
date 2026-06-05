@@ -1,5 +1,7 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity;
 
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.compound.EntityDescriptor;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.pathfinder.Vector2D;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Position;
 
 import java.util.UUID;
@@ -9,7 +11,7 @@ public abstract class LivingEntity implements Entity {
     private final EntityDescriptor descriptor;
     private final Position position;
     private double health;
-
+    private Vector2D velocity = Vector2D.zero();
 
     protected LivingEntity(EntityDescriptor descriptor, Position position) {
         this.uuid = UUID.randomUUID();
@@ -46,5 +48,15 @@ public abstract class LivingEntity implements Entity {
     @Override
     public UUID getUniqueId() {
         return uuid;
+    }
+
+    @Override
+    public Vector2D getVelocity() {
+        return velocity;
+    }
+
+    @Override
+    public void setVelocity(Vector2D velocity) {
+        this.velocity = velocity;
     }
 }

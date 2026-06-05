@@ -21,12 +21,12 @@ public class SimplePathFinder implements Pathfinder {
         }
 
         if (distance <= stepSpeed) {
-            return new Vector2D(deltaX, deltaY);
+            return new Vector2D((int) deltaX, (int) deltaY);
         }
 
         double moveX = (deltaX / distance) * stepSpeed;
         double moveY = (deltaY / distance) * stepSpeed;
 
-        return new Vector2D(moveX, moveY);
+        return new Vector2D((int) Math.round(moveX), (int) Math.round(moveY));
     }
 }

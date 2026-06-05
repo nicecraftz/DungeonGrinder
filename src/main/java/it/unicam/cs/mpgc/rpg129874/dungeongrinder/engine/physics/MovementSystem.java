@@ -1,10 +1,11 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.physics;
 
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.Entity;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.player.Player;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.pathfinder.Vector2D;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.WorldEnvironment;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Direction;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Position;
+
+import java.util.Set;
 
 public class MovementSystem {
     private final WorldEnvironment environment;
@@ -13,40 +14,35 @@ public class MovementSystem {
         this.environment = environment;
     }
 
-    public void tryMove(Entity entity, Direction direction) {
-        Position position = entity.getPosition();
-        int speed = entity.getDescriptor().attributes().speed();
+    public void update() {
+        Set<Entity> entities = environment.getEntityContainer().getEntities();
 
-        int oldX = position.getX();
-        int oldY = position.getY();
+        for (Entity entity : entities) {
+            Vector2D velocity = entity.getVelocity();
+            if (velocity == null || velocity.isStill()) continue;
 
-        boolean movedY = false;
-        if (direction == Direction.UP) {
-            movedY = true;
-            position.setY(position.getY() - speed);
-        }
+            Position currentPos = entity.getPosition();
+            Position nextPosFull = currentPos.clone();
+            nextPosFull.apply(velocity);
 
-        if (direction == Direction.DOWN) {
-            movedY = true;
-            position.setY(position.getY() + speed);
-        }
+            if (environment.isAreaWalkable(nextPosFull)) {
+                currentPos.setX(nextPosFull.getX());
+                currentPos.setY(nextPosFull.getY());
+            } else {
+                Position nextPositionX = currentPos.clone();
+                nextPositionX.apply(new Vector2D(velocity.x(), 0));
+                if (environment.isAreaWalkable(nextPositionX)) {
+                    currentPos.setX(nextPositionX.getX());
+                }
 
-        if (movedY && !environment.isAreaWalkable(position)) {
-            position.setY(oldY);
-        }
+                Position nextPositionY = currentPos.clone();
+                nextPositionY.apply(new Vector2D(0, velocity.y()));
+                if (environment.isAreaWalkable(nextPositionY)) {
+                    currentPos.setY(nextPositionY.getY());
+                }
+            }
 
-        boolean movedX = false;
-        if (direction == Direction.LEFT) {
-            position.setX(position.getX() - speed);
-            movedX = true;
-        }
-        if (direction == Direction.RIGHT) {
-            position.setX(position.getX() + speed);
-            movedX = true;
-        }
-
-        if (movedX && !environment.isAreaWalkable(position)) {
-            position.setX(oldX);
+            entity.setVelocity(Vector2D.zero());
         }
     }
 }

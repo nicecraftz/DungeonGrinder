@@ -1,6 +1,7 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.controller;
 
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.player.Player;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.pathfinder.Vector2D;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.physics.MovementSystem;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.view.GameView;
 import javafx.scene.input.KeyCode;
@@ -35,6 +36,7 @@ public class InputController {
     }
 
     public void processInput() {
+        player.setVelocity(Vector2D.zero());
         if (pressedKeys.isEmpty()) return;
         movementInputController.process(pressedKeys, player, movementSystem);
     }

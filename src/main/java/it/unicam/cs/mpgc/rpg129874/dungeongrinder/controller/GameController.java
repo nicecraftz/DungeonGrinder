@@ -7,6 +7,7 @@ import it.unicam.cs.mpgc.rpg129874.dungeongrinder.view.GameView;
 public class GameController {
     private final WorldEnvironment environment;
     private final GameView gameView;
+    private final MovementSystem movementSystem;
     private final GameLoopController gameLoopController;
     private final DebugOverlayController debugOverlayController;
     private final InputController inputController;
@@ -15,22 +16,19 @@ public class GameController {
     public GameController(WorldEnvironment environment, GameView gameView) {
         this.environment = environment;
         this.gameView = gameView;
-
+        this.movementSystem = new MovementSystem(environment);
         this.gameLoopController = new GameLoopController(this);
         this.debugOverlayController = new DebugOverlayController(gameView.getDebugOverlay());
-
-        // TODO: Modificare responsabilità del MovementSystem
-        //  (Deve essere un gestore a parte per la gestione dei
-        //  movimenti sulle tile di tutte le entità e non solo del player)
-        this.inputController = new InputController(gameView, new MovementSystem(environment), environment.getEntityContainer().getPlayer());
+        this.inputController = new InputController(gameView, movementSystem, environment.getPlayer());
         this.creatureController = new CreatureController(environment.getEntityContainer());
     }
 
 
     public void tick(double fps) {
-        debugOverlayController.update(environment, fps);
         inputController.processInput();
+        debugOverlayController.update(environment, fps);
         creatureController.tickCreatures();
+        movementSystem.update();
         gameView.render(environment);
     }
 }

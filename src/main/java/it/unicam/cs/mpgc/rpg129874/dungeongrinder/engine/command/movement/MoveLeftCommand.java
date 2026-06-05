@@ -1,8 +1,7 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.command.movement;
 
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.player.Player;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.Entity;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Direction;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.physics.MovementSystem;
 import javafx.scene.input.KeyCode;
 
 public class MoveLeftCommand implements MovementCommand {
@@ -12,7 +11,7 @@ public class MoveLeftCommand implements MovementCommand {
     }
 
     @Override
-    public void execute(Player player, MovementSystem input) {
-        input.tryMove(player, Direction.LEFT);
+    public void execute(Entity entity) {
+        entity.addVelocity(Direction.LEFT.toVectorWithSpeed(entity.getSpeed()));
     }
 }

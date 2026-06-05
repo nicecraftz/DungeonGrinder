@@ -1,38 +1,44 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.goal;
 
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.Creature;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.creature.Creature;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.player.Player;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.pathfinder.SimplePathFinder;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.pathfinder.Vector2D;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.physics.MovementSystem;
 
 public class PlayerChaseGoal implements Goal {
+    private static final SimplePathFinder PATH_FINDER = new SimplePathFinder();
+
     private final Creature creature;
     private final Player target;
-    private final MovementSystem movementSystem;
 
-    public PlayerChaseGoal(Creature creature, Player target, MovementSystem movementSystem) {
+    public PlayerChaseGoal(Creature creature, Player target) {
         this.creature = creature;
         this.target = target;
-        this.movementSystem = movementSystem;
     }
 
     @Override
     public boolean canStart() {
-        return false;
+        double distance = creature.getPosition().distance(target.getPosition());
+        return distance <= creature.getLockDistance();
     }
 
     @Override
     public boolean canContinue() {
-        return false;
+        double distance = creature.getPosition().distance(target.getPosition());
+        return distance <= creature.getLockDistance();
     }
 
     @Override
     public void start() {
-
     }
 
     @Override
     public void tick() {
-
+        Vector2D moveVector = PATH_FINDER.calculateMovement(creature.getPosition(),
+                target.getPosition(),
+                creature.getSpeed());
+        creature.addVelocity(moveVector);
     }
 
     @Override

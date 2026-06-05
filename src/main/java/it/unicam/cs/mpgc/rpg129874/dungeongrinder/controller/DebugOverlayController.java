@@ -1,5 +1,7 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.controller;
 
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.player.Player;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.pathfinder.Vector2D;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.WorldEnvironment;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room.RoomPoint;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Position;
@@ -17,7 +19,8 @@ public class DebugOverlayController {
     public void update(WorldEnvironment worldEnvironment, double fps) {
         if (!view.isVisible()) return;
         view.setFps(fps);
-        Position position = worldEnvironment.getPlayer().getPosition();
+        Player player = worldEnvironment.getPlayer();
+        Position position = player.getPosition();
         view.setRawCoordinates(position.getX(), position.getY());
 
         GameRoom currentRoom = worldEnvironment.getCurrentRoom();
@@ -29,5 +32,8 @@ public class DebugOverlayController {
         TilePosition tilePosition = position.toTilePosition();
         view.setCoordinates(tilePosition.x(), tilePosition.y());
         view.setCurrentTile(worldEnvironment.getTileAt(tilePosition));
+
+        Vector2D velocity = player.getVelocity();
+        view.setCurrentVelocity(velocity.x(), velocity.y());
     }
 }

@@ -1,8 +1,8 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.controller;
 
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.Creature;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.creature.Creature;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.Entity;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.EntityContainer;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.EntityContainer;
 
 import java.util.Set;
 

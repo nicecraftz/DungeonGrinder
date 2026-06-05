@@ -1,5 +1,7 @@
-package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity;
+package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.player;
 
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.LivingEntity;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.compound.EntityDescriptor;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Position;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.asset.AssetKey;
 

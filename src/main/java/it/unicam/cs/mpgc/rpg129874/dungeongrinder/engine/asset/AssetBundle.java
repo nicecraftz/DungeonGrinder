@@ -3,10 +3,8 @@ package it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.asset;
 import javafx.scene.image.Image;
 
 import java.util.List;
-import java.util.Random;
 
 public class AssetBundle {
-    private static final Random RANDOM = new Random();
     private final List<Image> images;
 
     public AssetBundle(List<Image> images) {
@@ -18,10 +16,6 @@ public class AssetBundle {
 
     public Image getDefaultImage() {
         return images.getFirst();
-    }
-
-    public Image getRandom() {
-        return images.get(RANDOM.nextInt(images.size()));
     }
 
     public Image getVariant(int variant) {

@@ -32,7 +32,7 @@ public class MovementInputController {
         for (KeyCode key : keys) {
             MovementCommand movementCommand = commands.get(key);
             if (movementCommand == null) continue;
-            movementCommand.execute(player, movementSystem);
+            movementCommand.execute(player);
         }
     }
 }

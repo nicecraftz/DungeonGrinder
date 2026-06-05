@@ -1,8 +1,10 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position;
 
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.pathfinder.Vector2D;
+
 import static it.unicam.cs.mpgc.rpg129874.dungeongrinder.Constant.*;
 
-public class Position {
+public class Position implements Cloneable {
     private int x;
     private int y;
 
@@ -42,5 +44,22 @@ public class Position {
 
     public TilePosition toTilePosition() {
         return new TilePosition(x / TILE_SIZE, y / TILE_SIZE);
+    }
+
+    public void apply(Vector2D vector) {
+        this.x += vector.x();
+        this.y += vector.y();
+    }
+
+    @Override
+    public Position clone() {
+        try {
+            Position clone = (Position) super.clone();
+            clone.x = x;
+            clone.y = y;
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

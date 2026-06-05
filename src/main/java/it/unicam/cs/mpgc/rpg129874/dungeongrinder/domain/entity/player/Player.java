@@ -1,8 +1,7 @@
 package it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.player;
 
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.EntityAttributes;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.EntityDescriptor;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.HumanEntity;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.compound.EntityAttributes;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.compound.EntityDescriptor;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Position;
 
 public class Player extends HumanEntity {
