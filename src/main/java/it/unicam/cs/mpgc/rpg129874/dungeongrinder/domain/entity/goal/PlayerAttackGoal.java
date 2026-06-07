@@ -23,12 +23,12 @@ public class PlayerAttackGoal implements Goal {
 
     @Override
     public boolean canStart() {
-        return creature.getPosition().distance(target.getPosition()) <= 1 && canAttack();
+        return creature.getPosition().distanceTiled(target.getPosition()) <= 1 && canAttack();
     }
 
     @Override
     public boolean canContinue() {
-        return creature.getPosition().distance(target.getPosition()) <= 1 && canAttack();
+        return creature.getPosition().distanceTiled(target.getPosition()) <= 1 && canAttack();
     }
 
     @Override

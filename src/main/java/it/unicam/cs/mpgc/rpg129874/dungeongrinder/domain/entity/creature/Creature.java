@@ -6,17 +6,11 @@ import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.goal.GoalSelecto
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.Position;
 
 public abstract class Creature extends LivingEntity {
-    private final int lockDistance;
     private final GoalSelector goalSelector;
 
-    public Creature(EntityDescriptor descriptor, Position position, int lockDistance) {
+    public Creature(EntityDescriptor descriptor, Position position) {
         super(descriptor, position);
-        this.lockDistance = lockDistance;
         goalSelector = new GoalSelector();
-    }
-
-    public int getLockDistance() {
-        return lockDistance;
     }
 
     public GoalSelector getGoalSelector() {

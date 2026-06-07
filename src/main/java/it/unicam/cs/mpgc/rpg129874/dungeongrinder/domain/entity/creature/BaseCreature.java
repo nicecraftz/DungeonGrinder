@@ -13,8 +13,8 @@ public class BaseCreature extends Creature {
     private static final EntityDescriptor ENTITY_DESCRIPTOR = new EntityDescriptor("Prova", ENTITY_ATTRIBUTES);
 
     public BaseCreature(WorldEnvironment worldEnvironment, Position position) {
-        super(ENTITY_DESCRIPTOR, position, 300);
-        getGoalSelector().addGoal(new PlayerChaseGoal(this, worldEnvironment.getPlayer()), 1);
+        super(ENTITY_DESCRIPTOR, position);
+        getGoalSelector().addGoal(new PlayerChaseGoal(this, worldEnvironment.getPlayer(), 3), 1);
         getGoalSelector().addGoal(new PlayerAttackGoal(this, worldEnvironment.getPlayer()), 2);
     }
 

@@ -38,6 +38,14 @@ public class Position implements Cloneable {
         return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     }
 
+    public double distanceTiled(Position otherPosition) {
+        TilePosition tilePosition = toTilePosition();
+        TilePosition otherTilePosition = toTilePosition();
+        double deltaX = tilePosition.x() - otherTilePosition.x();
+        double deltaY = tilePosition.y() - otherTilePosition.y();
+        return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    }
+
     public static Position center() {
         return new Position(APP_WIDTH / 2, APP_HEIGHT / 2);
     }

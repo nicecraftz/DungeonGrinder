@@ -4,29 +4,30 @@ import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.creature.Creatur
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.player.Player;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.pathfinder.SimplePathFinder;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.pathfinder.Vector2D;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.physics.MovementSystem;
 
 public class PlayerChaseGoal implements Goal {
     private static final SimplePathFinder PATH_FINDER = new SimplePathFinder();
 
     private final Creature creature;
     private final Player target;
+    private final int maxTileDistance;
 
-    public PlayerChaseGoal(Creature creature, Player target) {
+    public PlayerChaseGoal(Creature creature, Player target, int maxTileDistance) {
         this.creature = creature;
         this.target = target;
+        this.maxTileDistance = maxTileDistance;
     }
 
     @Override
     public boolean canStart() {
-        double distance = creature.getPosition().distance(target.getPosition());
-        return distance <= creature.getLockDistance();
+        double distance = creature.getPosition().distanceTiled(target.getPosition());
+        return distance <= maxTileDistance;
     }
 
     @Override
     public boolean canContinue() {
-        double distance = creature.getPosition().distance(target.getPosition());
-        return distance <= creature.getLockDistance();
+        double distance = creature.getPosition().distanceTiled(target.getPosition());
+        return distance <= maxTileDistance;
     }
 
     @Override
