@@ -2,7 +2,6 @@ package it.unicam.cs.mpgc.rpg129874.dungeongrinder.controller;
 
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.player.Player;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.command.movement.*;
-import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.physics.MovementSystem;
 import javafx.scene.input.KeyCode;
 
 import java.util.HashMap;
@@ -28,7 +27,7 @@ public class MovementInputController {
         commands.put(command.key(), command);
     }
 
-    public void process(Set<KeyCode> keys, Player player, MovementSystem movementSystem) {
+    public void process(Set<KeyCode> keys, Player player) {
         for (KeyCode key : keys) {
             MovementCommand movementCommand = commands.get(key);
             if (movementCommand == null) continue;
