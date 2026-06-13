@@ -19,13 +19,11 @@ import static it.unicam.cs.mpgc.rpg129874.dungeongrinder.Constant.TILE_SIZE;
 
 public class GameView extends StackPane {
     private static final AssetRegistry ASSET_REGISTRY = AssetRegistry.getInstance();
-    private final DebugOverlayView debugOverlay;
     private final Canvas canvas;
 
     public GameView() {
         this.canvas = new Canvas(Constant.APP_WIDTH, Constant.APP_HEIGHT);
-        this.debugOverlay = new DebugOverlayView();
-        getChildren().addAll(canvas, debugOverlay);
+        getChildren().add(canvas);
     }
 
     private void render(GraphicsContext gc, AssetKey assetKey, int x, int y) {
@@ -54,14 +52,6 @@ public class GameView extends StackPane {
             Position position = entity.getPosition();
             render(gc, entity.getAssetKey(), position.getX(), position.getY());
         }
-    }
-
-    public DebugOverlayView getDebugOverlay() {
-        return debugOverlay;
-    }
-
-    public void toggleDebugOverlay() {
-        debugOverlay.setVisible(!debugOverlay.isVisible());
     }
 
 }
