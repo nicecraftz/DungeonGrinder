@@ -7,12 +7,17 @@ import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.position.TilePosi
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room.GameRoom;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room.RoomPoint;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.world.room.TileType;
+import it.unicam.cs.mpgc.rpg129874.dungeongrinder.view.event.RoomTransitionEvent;
+import javafx.event.Event;
+import javafx.event.EventTarget;
 
 public class RoomController {
     private final WorldEnvironment environment;
+    private final EventTarget eventTarget;
 
-    public RoomController(WorldEnvironment environment) {
+    public RoomController(WorldEnvironment environment, EventTarget eventTarget) {
         this.environment = environment;
+        this.eventTarget = eventTarget;
     }
 
     public void checkRoomTransition() {
@@ -25,9 +30,11 @@ public class RoomController {
         int tileY = tilePosition.y();
         int tileX = tilePosition.x();
         GameRoom nextRoom = getNextRoom(currentPoint, tileY, tileX);
-        environment.setCurrentRoom(nextRoom);
 
-        repositionPlayer(player, tileX, tileY);
+        Event.fireEvent(eventTarget, new RoomTransitionEvent(() -> {
+            environment.setCurrentRoom(nextRoom);
+            repositionPlayer(player, tileX, tileY);
+        }));
     }
 
     private void repositionPlayer(Player player, int oldTileX, int oldTileY) {
