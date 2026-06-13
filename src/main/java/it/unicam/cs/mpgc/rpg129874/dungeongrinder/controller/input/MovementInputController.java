@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg129874.dungeongrinder.controller;
+package it.unicam.cs.mpgc.rpg129874.dungeongrinder.controller.input;
 
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.player.Player;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.engine.command.movement.*;

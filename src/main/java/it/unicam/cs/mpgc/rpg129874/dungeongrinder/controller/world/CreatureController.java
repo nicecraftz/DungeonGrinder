@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg129874.dungeongrinder.controller;
+package it.unicam.cs.mpgc.rpg129874.dungeongrinder.controller.world;
 
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.creature.Creature;
 import it.unicam.cs.mpgc.rpg129874.dungeongrinder.domain.entity.Entity;
