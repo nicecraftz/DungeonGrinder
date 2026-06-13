@@ -29,4 +29,8 @@ public abstract class HumanEntity extends LivingEntity {
     public int getLevel() {
         return level;
     }
+
+    public int getExperience() {
+        return experience;
+    }
 }
