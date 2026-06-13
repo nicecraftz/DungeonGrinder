@@ -13,6 +13,7 @@ public class InputController {
     private final GameView gameView;
     private final MovementSystem movementSystem;
     private final MovementInputController movementInputController;
+    private final ActionInputController actionInputController;
     private final Player player;
 
     public InputController(GameView gameView, MovementSystem movementSystem, Player player) {
@@ -20,6 +21,7 @@ public class InputController {
         this.movementSystem = movementSystem;
         this.player = player;
         this.movementInputController = new MovementInputController();
+        this.actionInputController = new ActionInputController();
         configureInputListener();
     }
 
@@ -38,6 +40,7 @@ public class InputController {
     public void processInput() {
         player.setVelocity(Vector2D.zero());
         if (pressedKeys.isEmpty()) return;
-        movementInputController.process(pressedKeys, player, movementSystem);
+        movementInputController.process(pressedKeys, player);
+        actionInputController.process(pressedKeys, player);
     }
 }
