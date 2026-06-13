@@ -14,13 +14,20 @@ import javafx.event.EventTarget;
 public class RoomController {
     private final WorldEnvironment environment;
     private final EventTarget eventTarget;
+    private boolean transitionInProgress = false;
 
     public RoomController(WorldEnvironment environment, EventTarget eventTarget) {
         this.environment = environment;
         this.eventTarget = eventTarget;
     }
 
+    public boolean isTransitionInProgress() {
+        return transitionInProgress;
+    }
+
     public void checkRoomTransition() {
+        if (transitionInProgress) return;
+
         Player player = environment.getPlayer();
         TilePosition tilePosition = player.getPosition().toTilePosition();
         if (environment.getTileAt(tilePosition.x(), tilePosition.y()) != TileType.DOOR) return;
@@ -31,10 +38,11 @@ public class RoomController {
         int tileX = tilePosition.x();
         GameRoom nextRoom = getNextRoom(currentPoint, tileY, tileX);
 
+        transitionInProgress = true;
         Event.fireEvent(eventTarget, new RoomTransitionEvent(() -> {
             environment.setCurrentRoom(nextRoom);
             repositionPlayer(player, tileX, tileY);
-        }));
+        }, () -> transitionInProgress = false));
     }
 
     private void repositionPlayer(Player player, int oldTileX, int oldTileY) {

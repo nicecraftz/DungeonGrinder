@@ -34,12 +34,14 @@ public class GameController {
 
 
     public void tick(double fps) {
-        inputController.processInput();
-        debugOverlayController.update(environment, fps);
-        statusController.update(environment.getPlayer());
-        creatureController.tickCreatures();
-        movementSystem.update();
-        roomController.checkRoomTransition();
+        if (!roomController.isTransitionInProgress()) {
+            inputController.processInput();
+            debugOverlayController.update(environment, fps);
+            statusController.update(environment.getPlayer());
+            creatureController.tickCreatures();
+            movementSystem.update();
+            roomController.checkRoomTransition();
+        }
         gameView.render(environment);
     }
 

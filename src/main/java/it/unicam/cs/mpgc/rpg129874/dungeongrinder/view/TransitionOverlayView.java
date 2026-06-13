@@ -19,7 +19,7 @@ public class TransitionOverlayView extends Region {
         setMouseTransparent(true);
     }
 
-    public void startBlink(Runnable onMidPoint) {
+    public void startBlink(Runnable onMidPoint, Runnable onEnd) {
         FadeTransition fadeOut = new FadeTransition(Duration.millis(300), overlay);
         fadeOut.setFromValue(0);
         fadeOut.setToValue(1);
@@ -28,6 +28,7 @@ public class TransitionOverlayView extends Region {
         FadeTransition fadeIn = new FadeTransition(Duration.millis(300), overlay);
         fadeIn.setFromValue(1);
         fadeIn.setToValue(0);
+        fadeIn.setOnFinished(e -> onEnd.run());
 
         SequentialTransition sequence = new SequentialTransition(fadeOut, fadeIn);
         sequence.play();

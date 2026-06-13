@@ -6,8 +6,8 @@ public class RoomAttributes {
     private static final int MAX_CHEST_PER_ROOM = 8;
     private static final int MIN_CHEST_PER_ROOM = 4;
 
-    private static final int MIN_ENEMIES_PER_ROOM = 5;
-    private static final int MAX_ENEMIES_PER_ROOM = 10;
+    private static final int MIN_ENEMIES_PER_ROOM = 1;
+    private static final int MAX_ENEMIES_PER_ROOM = 3;
 
     private final int chests;
     private final int enemies;

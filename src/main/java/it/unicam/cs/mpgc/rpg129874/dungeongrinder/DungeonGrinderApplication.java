@@ -39,7 +39,7 @@ public class DungeonGrinderApplication extends Application {
         new GameController(worldMap, gameView, debugOverlayView, statusView);
 
         root.addEventHandler(RoomTransitionEvent.TRANSITION_REQUESTED, event ->
-                transitionOverlayView.startBlink(event::executeCallback));
+                transitionOverlayView.startBlink(event::executeMidPointCallback, event::executeEndCallback));
 
         stage.getScene().setRoot(root);
     }
