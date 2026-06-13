@@ -3,6 +3,8 @@
 DungeonGrinder è un gioco Dungeon-Crawler con nemici e funzionalità basilari che permette di giocare senza fine, infatti
 presenta la funzionalità di avere una generazione procedurale di stanze in modo illimitato.
 
+![Screenshot del Gioco](https://i.imgur.com/5mtRU6Q.png)
+
 ---
 
 ## 🚀 Come eseguire il progetto
