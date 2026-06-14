@@ -22,7 +22,9 @@ public class AssetRegistry {
             for (int i = 0; i < key.getFrameCount(); i++) {
                 String suffix = key.getFrameCount() > 1 ? "_" + i : "";
                 String fullPath = "assets/" + key.getBasePath() + suffix + ".png";
-                frames.add(new Image(fullPath));
+                String resourcePath = "/" + fullPath;
+                String url = AssetRegistry.class.getResource(resourcePath).toExternalForm();
+                frames.add(new Image(url));
             }
             LOADED_ASSETS.put(key, new AssetBundle(frames));
         }

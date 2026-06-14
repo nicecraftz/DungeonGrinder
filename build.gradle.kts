@@ -1,9 +1,9 @@
 plugins {
     java
     application
-    id("org.javamodularity.moduleplugin") version "1.8.15"
-    id("org.openjfx.javafxplugin") version "0.0.13"
-    id("org.beryx.jlink") version "2.25.0"
+    id("org.javamodularity.moduleplugin") version "2.0.1"
+    id("org.openjfx.javafxplugin") version "0.1.0"
+    id("org.beryx.jlink") version "4.0.2"
 }
 
 group = "it.unicam.cs.mpgc.rpg129874"
@@ -17,7 +17,7 @@ val junitVersion = "5.12.1"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
@@ -31,12 +31,12 @@ application {
 }
 
 javafx {
-    version = "21.0.11"
+    version = "25.0.3"
     modules = listOf("javafx.controls")
 }
 
 dependencies {
-    implementation("org.controlsfx:controlsfx:11.2.1")
+    implementation("org.controlsfx:controlsfx:11.2.3")
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }
